@@ -1,0 +1,8 @@
+
+
+run:
+  $ ./configure
+  $ make
+  $ make install
+
+Now you shod have xdkim in /usr/local/bin.

@@ -1,0 +1,21 @@
+#!/bin/sh
+#********************************************************************************
+make clean >/dev/null
+cp Makefile.in Makefile.in.tmp
+
+OS=`uname`
+echo "Checking system ... "${OS}" found!"
+if [ $OS ] && [ $OS == "Linux" ] ; then
+#if [ `uname` == "Linux" ] ; then
+   echo "Using -lresolv ..."
+   sed s}'LFLAGS ='}'LFLAGS =-lresolv'}g Makefile.in.tmp > Makefile.tmp \
+   && mv Makefile.tmp Makefile.in.tmp
+fi
+
+VERS="VERSION="`head -1 VERSION`
+echo "Set version string ... "`head -1 VERSION`
+sed s}^VERSION.*$}$VERS}g Makefile.in.tmp > Makefile.tmp
+
+mv Makefile.tmp Makefile
+rm Makefile.in.tmp
+echo "Done! Now run make."

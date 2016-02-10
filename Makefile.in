@@ -1,0 +1,35 @@
+# libdkim makefile for UNIX
+#
+
+VERSION=
+CFLAGS =-c -DVERSION=\"${VERSION}\"
+LFLAGS =
+LIBS   =-lcrypto
+#INCL	=  -I /usr/include/openssl/
+
+SRCS = dkim.cpp dns.cpp dkimbase.cpp dkimsign.cpp dkimverify.cpp
+OBJS = $(SRCS:.cpp=.o)
+
+#HDRS = dkim.h dns.h dkimbase.h dkimsign.h dkimverify.h
+
+all: libdkim.a xdkim
+
+libdkim.a: $(OBJS)
+	rm -f libdkim.a
+	ar cr libdkim.a $(OBJS)
+	ranlib libdkim.a
+
+xdkim: libdkim.a xdkim.o
+	g++ -o xdkim $(LFLAGS) -L . xdkim.o $(LIBS) -ldkim
+
+xdkim.o: xdkim.cpp 
+
+.cpp.o:
+	g++ $(CFLAGS) $<
+
+clean:
+	rm -f *.o xdkim libdkim.a Makefile
+
+install:
+	mkdir -p /usr/local/bin
+	cp xdkim /usr/local/bin
