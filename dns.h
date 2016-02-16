@@ -29,7 +29,6 @@
 
 // return values for DNS functions:
 
-
 #define MAX_DOMAIN			254
 
 #define DNSRESP_SUCCESS					0	// DNS lookup returned sought after records

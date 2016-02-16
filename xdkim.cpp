@@ -17,28 +17,19 @@
 *  limitations under the License.
 *
 *****************************************************************************/
-/*
-#ifdef WIN32
-#include <windows.h>
-#else
-*/
 #define strnicmp strncasecmp 
-//#endif
 
 #include <stdio.h>
 #include <string.h>
 #include <time.h>
 #include <stdlib.h>
-
 #include "dkim.h"
 #include "dns.h"
 
-
 // change these to your selector name, domain name, etc
-#define MYSELECTOR	"MDaemon"
-#define MYDOMAIN	"bardenhagen.com"
-#define MYIDENTITY	"dkimtest@bardenhagen.com"
-
+#define MYSELECTOR	"default"
+#define MYDOMAIN	"" //"bardenhagen.com"
+#define MYIDENTITY	"" //"dkimtest@bardenhagen.com"
 
 int DKIM_CALL SignThisHeader(const char* szHeader)
 {
@@ -46,7 +37,6 @@ int DKIM_CALL SignThisHeader(const char* szHeader)
 	{
 		return 0;
 	}
-
 	return 1;
 }
 
@@ -58,30 +48,24 @@ int DKIM_CALL SelectorCallback(const char* szFQDN, char* szBuffer, int nBufLen )
 
 void usage()
 {
-	char* version;
-	version = (char *)DKIMVersion();
-//	printf( "usage:\n xdkim [-b<standard>] [-c<r|s|t|u>] [-d<domain>] [-l] [-h] [-i<you@yourdomain.com>] [-q] [-s] [-t] [-v] ");
-printf("xdkim %s \n",version);
-	printf("Usage: xdkim [-h|-v|-s] [tags] <msgfile> [<privkeyfile> <outfile>]\n\n");
-//	printf( "-x<expire time>] [-z<hash>] <msgfile> <privkeyfile> <outfile>\n\n");
-	printf( "Options:\n\t-h show this help\n");
-	printf( "\t-s sign the message\n");
-	printf( "\t-v verify the message\n\n");
-    printf( "These tags are available:\n");
-//	printf( "\t-b<allman|ietf|both>\n");
-	printf( "\t-b<standard>\n");
-	printf( "\t-c<canonicalization> - r=relaxed [DEFAULT], s=simple, t=relaxed/simple, u=simple/relaxed\n");
-	printf( "\t-d<domain>           - domain tag (if not provided it will be determined from the sender/from header)\n");
-	printf( "\t-i<identity>         - the identity, usually the sender address (optional)\n");
-	printf( "\t-l                   - include body length tag (optional)\n");
-//	printf( "\t-h show this help\n");
-//	printf( "\t-s sign the message\n");
-	printf( "\t-t                   - include a timestamp tag (optional)\n");
-//	printf( "\t-v verify the message\n");
-//	printf( "\t-x<expire_time> the expire time in seconds since epoch ( DEFAULT = current time + 604800)\n\t if set to - then it will not be included\n");
-	printf( "\t-x<expire_time>      - the expire time in seconds since epoch (optional, DEFAULT = current time + 604800)\n");
-	printf( "\t-y<selector>         (DEFAULT: default)\n");
-	printf( "\t-z<hash>             (1=sha1, 2=sha256, 3=both)\n");
+  char* version;
+  version = (char *)DKIMVersion();
+  printf("xdkim %s \n",version);
+  printf("Usage: xdkim [-h|-v|-s] [tags] <msgfile> [<privkeyfile> <outfile>]\n\n");
+  printf( "Options:\n\t-h show this help\n");
+  printf( "\t-s sign the message\n");
+  printf( "\t-v verify the message\n\n");
+  printf( "These tags are available:\n");
+  printf( "\t-b<standard>         - set the standard (1=allman, 2=ietf, 3=both)\n");
+  printf( "\t-c<canonicalization> - r=relaxed [DEFAULT], s=simple, t=relaxed/simple, u=simple/relaxed\n");
+  printf( "\t-d<domain>           - domain tag (if not provided it will be determined from the sender/from header)\n");
+  printf( "\t-i<identity>         - the identity, usually the sender address (optional)\n");
+  printf( "\t-l                   - include body length tag (optional)\n");
+  printf( "\t-q                   - include query method tag\n");
+  printf( "\t-t                   - include a timestamp tag (optional)\n");
+  printf( "\t-x<expire_time>      - the expire time in seconds since epoch (optional, DEFAULT = current time + 604800)\n");
+  printf( "\t-y<selector>         - set selector (DEFAULT: default)\n");
+  printf( "\t-z<hash>             - set rsa-key type (1=sha1, 2=sha256, 3=both)\n");
 }
 int main(int argc, char* argv[])
 {
@@ -291,9 +275,7 @@ int main(int argc, char* argv[])
 		fwrite( "\r\n", 1, 2, out );
 
 		while (1) {
-			
 			BufLen = fread( Buffer, 1, sizeof(Buffer), in );
-
 			if( BufLen > 0 )
 			{
 				fwrite( Buffer, 1, BufLen, out );
@@ -352,7 +334,6 @@ int main(int argc, char* argv[])
 			printf(" %i\n", e);
 			}
 		}
-
 		DKIMVerifyFree( &ctxt );
 	}
 

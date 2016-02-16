@@ -18,17 +18,9 @@
 *
 *****************************************************************************/
 
-/*
-#ifdef WIN32
-#include <windows.h>
-#pragma warning( disable: 4786 )
-#else
-#endif
-*/
 #include "dkim.h"
 #include "dkimsign.h"
 #include "dkimverify.h"
-//#include "resource.h"
 #include <string.h>
 
 #define DKIMID ('D' | 'K'<<8 | 'I'<<16 | 'M'<<24)
@@ -38,31 +30,6 @@
 #else
 #define VERSION_STRING "1.0.21"
 #endif
-/*
-#ifdef WIN32
-//////////////////////////////////////////////////////////////////////
-// DllMain
-//////////////////////////////////////////////////////////////////////
-BOOL APIENTRY DllMain( HANDLE hModule, 
-                       DWORD  dwReason, 
-                       LPVOID lpReserved
-					 )
-{
-
-	switch (dwReason)
-	{
-		case DLL_PROCESS_ATTACH:
-			//g_Instance = (HINSTANCE)hModule;
-			break;
-
-		case DLL_PROCESS_DETACH:
-			break;
-	}
-
-    return TRUE;
-}
-#endif // #ifdef WIN32
-*/
 
 static void InitContext( DKIMContext* pContext, bool bSign, void* pObject )
 {
@@ -113,11 +80,11 @@ int DKIM_CALL DKIMSignProcess( DKIMContext* pSignContext, char* szBuffer, int nB
 	{
 		return pSign->Process( szBuffer, nBufLength, false );
 	}
-	
 	return DKIM_INVALID_CONTEXT;
 }
 
 
+/*
 int DKIM_CALL DKIMSignGetSig( DKIMContext* pSignContext, char* szPrivKey, char* szSignature, int nSigLength )
 {
 	CDKIMSign* pSign = (CDKIMSign*)ValidateContext( pSignContext, true );
@@ -126,10 +93,9 @@ int DKIM_CALL DKIMSignGetSig( DKIMContext* pSignContext, char* szPrivKey, char* 
 	{
 		return pSign->GetSig( szPrivKey, szSignature, nSigLength );
 	}
-	
 	return DKIM_INVALID_CONTEXT;
 }
-
+*/
 int DKIM_CALL DKIMSignGetSig2( DKIMContext* pSignContext, char* szPrivKey, char** pszSignature )
 {
 	CDKIMSign* pSign = (CDKIMSign*)ValidateContext( pSignContext, true );

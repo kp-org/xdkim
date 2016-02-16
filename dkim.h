@@ -18,13 +18,8 @@
 *
 *****************************************************************************/
 
-//#ifdef WIN32
-//#define DKIM_CALL	WINAPI
-//#else
 #define DKIM_CALL
 #define MAKELONG(a,b) ((long)(((unsigned)(a) & 0xffff) | (((unsigned)(b) & 0xffff) << 16)))
-//#endif
-
 
 #ifdef __cplusplus
 extern "C" {
@@ -93,12 +88,6 @@ typedef int (DKIM_CALL *DKIMHEADERCALLBACK)(const char* szHeader);
 // This function is called to retrieve a TXT record from DNS
 typedef int (DKIM_CALL *DKIMDNSCALLBACK)(const char* szFQDN, char* szBuffer, int nBufLen );
 
-/*
-#ifdef _WIN32
-#include <pshpack1.h>
-#endif
-*/
-
 typedef struct DKIMContext_t
 {
 	unsigned int reserved1;
@@ -122,7 +111,7 @@ typedef struct DKIMSignOptions_t
 											// even if not present in the message
 	int nIncludeCopiedHeaders;				// 0 = don't include z= tag, 1 = include z= tag
 	int nIncludeBodyHash;					// use one of the DKIM_BODYHASH_xx constants here
-} DKIMSignOptions;							
+} DKIMSignOptions;
 
 typedef struct DKIMVerifyOptions_t
 {
@@ -144,15 +133,9 @@ typedef struct DKIMVerifyDetails_t
 	int nResult;
 } DKIMVerifyDetails;
 
-/*
-#ifdef _WIN32
-#include <poppack.h>
-#endif
-*/
-
 int DKIM_CALL DKIMSignInit( DKIMContext* pSignContext, DKIMSignOptions* pOptions );
 int DKIM_CALL DKIMSignProcess( DKIMContext* pSignContext, char* szBuffer, int nBufLength );
-int DKIM_CALL DKIMSignGetSig( DKIMContext* pSignContext, char* szPrivKey, char* szSignature, int nSigLength );
+//int DKIM_CALL DKIMSignGetSig( DKIMContext* pSignContext, char* szPrivKey, char* szSignature, int nSigLength );
 int DKIM_CALL DKIMSignGetSig2( DKIMContext* pSignContext, char* szPrivKey, char** pszSignature );
 void DKIM_CALL DKIMSignFree( DKIMContext* pSignContext );
 

@@ -90,7 +90,6 @@ protected:
 	int m_nIncludeBodyHash;					// 0 = calculate sig using draft 0, 1 = include bh= tag and 
 											// use new signature computation algorithm
 
-
 	DKIMHEADERCALLBACK m_pfnHdrCallback;
 
 	string m_sSig;
@@ -100,9 +99,6 @@ protected:
 	bool m_bReturnedSigAssembled;
 
 	string m_sCopiedHeaders;
-
 };
-
-
 
 #endif // DKIMSIGN_H

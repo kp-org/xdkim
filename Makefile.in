@@ -1,4 +1,4 @@
-# libdkim makefile for UNIX
+# xdkim makefile for UNIX
 #
 
 VERSION=
@@ -12,24 +12,26 @@ OBJS = $(SRCS:.cpp=.o)
 
 #HDRS = dkim.h dns.h dkimbase.h dkimsign.h dkimverify.h
 
-all: libdkim.a xdkim
+all: libxdkim.a xdkim
 
-libdkim.a: $(OBJS)
-	rm -f libdkim.a
-	ar cr libdkim.a $(OBJS)
-	ranlib libdkim.a
+libxdkim.a: $(OBJS)
+	rm -f libxdkim.a
+	ar cr libxdkim.a $(OBJS)
+	ranlib libxdkim.a
 
-xdkim: libdkim.a xdkim.o
-	g++ -o xdkim $(LFLAGS) -L . xdkim.o $(LIBS) -ldkim
+xdkim: libxdkim.a xdkim.o
+	g++ -o xdkim $(LFLAGS) -L . xdkim.o $(LIBS) -lxdkim
 
-xdkim.o: xdkim.cpp 
+xdkim.o: xdkim.cpp
 
 .cpp.o:
 	g++ $(CFLAGS) $<
 
 clean:
-	rm -f *.o xdkim libdkim.a Makefile
+	rm -f *.o xdkim libxdkim.a Makefile
 
 install:
 	mkdir -p /usr/local/bin
 	cp xdkim /usr/local/bin
+	mkdir -p /usr/local/man/man8
+	cp xdkim.8 /usr/local/man/man8

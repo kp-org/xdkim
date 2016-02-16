@@ -1,0 +1,23 @@
+
+
+Requirements
+
+xdim needs openssl >0.9.8, recommended is >1.0.1r. It is recommended
+to use GNU gcc (g++) 4.8 or newer to compile the source. 
+
+Installation
+
+To install xdkim run:
+  $ ./configure
+  $ make
+  $ make install
+
+Now you should have xdkim in /usr/local/bin and xdkim.8 in
+/usr/local/man[/man8].
+
+xdkim was tested on
+  - Gentoo linux
+  - Debian 7 "Wheezy"
+  - openSuSE 13.2
+  - FreeBSD 10.2
+

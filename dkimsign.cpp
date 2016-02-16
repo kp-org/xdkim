@@ -347,7 +347,7 @@ int CDKIMSign::ProcessHeaders(void)
 				IterMapIter = IterMap.find( sTag );
 
 				riter = ( IterMapIter == IterMap.end() ) ? HeaderList.rbegin() : IterMapIter->second;
-			
+
 				// walk the list in reverse looking for the last instance of this header
 				while ( riter != HeaderList.rend() )
 				{

@@ -18,15 +18,8 @@
 *
 *****************************************************************************/
 
-/*
-#ifdef WIN32
-#include <windows.h>
-#pragma warning( disable: 4786 )
-#else
-*/
 #define _strnicmp strncasecmp 
 #define _stricmp strcasecmp 
-//#endif
 
 #include "dkim.h"
 #include "dkimverify.h"
